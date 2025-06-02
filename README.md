@@ -1,19 +1,62 @@
-# 🎈 Blank app template
+Got it! Here’s a polished README tailored for your **pdf2ppt by abhimanyus1997** Streamlit app:
 
-A simple Streamlit app template for you to modify!
+---
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://blank-app-template.streamlit.app/)
+# 📄 PDF to PPTX Converter by abhimanyus1997
 
-### How to run it on your own machine
+A Streamlit app to convert PDF documents into PowerPoint presentations with optional OCR text overlay.
 
-1. Install the requirements
+---
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+### Features
 
-2. Run the app
+* Convert each PDF page into a slide image
+* Optionally extract and overlay OCR text using Tesseract OCR
+* Handles varying page sizes by adjusting slide dimensions
+* Simple and intuitive web interface powered by Streamlit
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+---
+
+### How to run locally
+
+1. Clone the repo or download the code.
+
+2. Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+3. Run the Streamlit app:
+
+```bash
+streamlit run streamlit_app.py
+```
+
+4. Open the URL shown in your browser, upload a PDF, and convert it to PPTX!
+
+---
+
+### Requirements
+
+* Python 3.7+
+* [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) installed on your system (for OCR functionality)
+* Poppler-utils installed (for PDF image rendering)
+
+---
+
+### Notes
+
+* To enable OCR text overlay, check the “Enable OCR text overlay” box before converting.
+* Large PDFs may take some time to process depending on your machine.
+* The output PowerPoint file is available for download after conversion completes.
+
+---
+
+### Contact
+
+Created by [Abhimanyu Singh](https://www.linkedin.com/in/abhimanyus1997/)
+
+---
+
+If you want, I can help you generate a `requirements.txt` or a Dockerfile for easy deployment!
