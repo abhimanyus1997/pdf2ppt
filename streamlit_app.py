@@ -5,16 +5,13 @@ import tempfile
 from PIL import Image
 from pptx import Presentation
 from pptx.util import Inches, Pt
-from pdf2image import convert_from_path
 import streamlit as st
 
-# Constants
 DPI = 150
 MAX_SLIDE_INCH = 56
 
-def pdf_to_pptx(pdf_file, enable_ocr=False):
+def pdf_to_pptx_and_images(pdf_file, enable_ocr=False):
     with tempfile.TemporaryDirectory() as temp_dir:
-        # Save uploaded PDF
         pdf_path = os.path.join(temp_dir, "input.pdf")
         with open(pdf_path, "wb") as f:
             f.write(pdf_file.read())
@@ -22,6 +19,8 @@ def pdf_to_pptx(pdf_file, enable_ocr=False):
         doc = fitz.open(pdf_path)
         total_pages = len(doc)
         prs = Presentation()
+
+        slide_images = []
 
         for i in range(total_pages):
             page = doc.load_page(i)
@@ -50,11 +49,15 @@ def pdf_to_pptx(pdf_file, enable_ocr=False):
                     tf.text = ocr_text.strip()[:1000]
                     tf.paragraphs[0].font.size = Pt(12)
 
-        # Save final PPTX
+            # Collect slide images for preview
+            slide_images.append(img_path)
+
         pptx_path = os.path.join(temp_dir, "output.pptx")
         prs.save(pptx_path)
+        with open(pptx_path, "rb") as f:
+            pptx_bytes = f.read()
 
-        return pptx_path
+        return pptx_bytes, slide_images
 
 # Streamlit UI
 st.set_page_config(page_title="📄 PDF to PPTX Converter", layout="centered")
@@ -66,7 +69,14 @@ enable_ocr = st.checkbox("Enable OCR text overlay", value=False)
 
 if uploaded_pdf and st.button("Convert to PPTX"):
     with st.spinner("⏳ Converting..."):
-        pptx_file_path = pdf_to_pptx(uploaded_pdf, enable_ocr)
-        with open(pptx_file_path, "rb") as f:
-            st.success("✅ Conversion complete!")
-            st.download_button("📥 Download PPTX", f, file_name="converted.pptx")
+        pptx_bytes, slide_images = pdf_to_pptx_and_images(uploaded_pdf, enable_ocr)
+
+        st.success("✅ Conversion complete!")
+
+        # Preview PDF pages / PPT slides as images
+        st.subheader("Preview slides")
+        for img_path in slide_images:
+            img = Image.open(img_path)
+            st.image(img, use_column_width=True)
+
+        st.download_button("📥 Download PPTX", pptx_bytes, file_name="converted.pptx")

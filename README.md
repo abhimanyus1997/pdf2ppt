@@ -1,7 +1,3 @@
-Got it! Here’s a polished README tailored for your **pdf2ppt by abhimanyus1997** Streamlit app:
-
----
-
 # 📄 PDF to PPTX Converter by abhimanyus1997
 
 A Streamlit app to convert PDF documents into PowerPoint presentations with optional OCR text overlay.
@@ -56,7 +52,3 @@ streamlit run streamlit_app.py
 ### Contact
 
 Created by [Abhimanyu Singh](https://www.linkedin.com/in/abhimanyus1997/)
-
----
-
-If you want, I can help you generate a `requirements.txt` or a Dockerfile for easy deployment!
